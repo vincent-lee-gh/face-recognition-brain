@@ -7,7 +7,7 @@ const Header = ({onRouteChange, isLoginedIn}) => {
     <div>
       <nav>
         <div className='nav-L'>
-          <a >LOGO</a>
+          <a href='#0' >LOGO</a>
         </div>
 
         <div className='nav-R'>

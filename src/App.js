@@ -8,12 +8,12 @@ import Register from './components/LogStatus/Register'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import './App.css';
-import Navigation from './components/Nav/Navigation';
+// import Navigation from './components/Nav/Navigation';
 
-const contentWrapper = styled.div`
-`;
+// const contentWrapper = styled.div`
+// `;
 
 
 const app = new Clarifai.App({
