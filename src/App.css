@@ -1,10 +1,21 @@
+body{
+  --input-height:2em;
+  --inputSec-MaxWidth: 800px;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
 
 .container {
+  /* display: flex; */
+  /* justify-content: center; */
+
   width: 80vw;
+  /* height: 100%; */
   margin: auto;
+  /* padding: 0 0 0 5em; */
 }
 
 nav{
@@ -16,6 +27,12 @@ nav{
 
 nav ul{
   list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li{
+  margin: 5px;
 }
 
 /* .nav-R{
@@ -40,3 +57,55 @@ nav ul{
   color: rgba(76, 0, 255, 0.192);
   /* outline: 5px dotted rgb(0, 0, 0); */
 }
+
+.contentWrapper{
+  margin: 0 auto;
+  width:  min(100%, var(--inputSec-MaxWidth));
+}
+
+.content{
+  margin: 2em 0;
+}
+
+.glassMorphism{
+  backdrop-filter: blur(50px);
+}
+
+.imageLinkForm{
+  margin: 15px auto;
+ }
+
+#inputSec{
+  
+  height: 100px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  box-shadow: 0px 0px 8px 2.5px rgba(0, 0, 0, 0.144);
+  
+  height: max(5vh , 12.5vh);
+}
+
+/* https://world-celebs.com/public/media/resize/800x-/2019/11/15/rachel-cook-2.jpg */
+
+.imageLinkForm input {
+  border: none;
+  border-radius: 50px 0 0 50px ;
+  height: var( --input-height);
+  width: 50%;
+  
+}
+
+
+#btn-detect{
+  /* border: 5px groove rgb(255, 255, 255); */
+  background-color: rgb(89, 51, 255);
+  color:rgb(255, 255, 255);
+  border: none;
+  border-radius: 0  50px 50px 0;
+  height: 2.1em;
+  width: clamp(75px, 20vw , 120px);
+}
+

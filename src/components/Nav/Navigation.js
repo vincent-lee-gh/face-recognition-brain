@@ -1,23 +1,42 @@
 
 
-const Navigation = () => {
+const Navigation = ({onRouteChange, isLoginedIn}) => {
+    if (isLoginedIn) {
   return(
-    <div>
-      <nav>
-        <div className='nav-L'>
-          <a href="">LOGO</a>
-        </div>
+      <ul>
+      <li>
+        <a  
+        onClick={()=> onRouteChange('logout')} 
+        // className='link dim pointer ' 
+        href="#0"
+        >
+          Sign out</a>
+      </li>
+    </ul>
+  )} else {
+    return(
 
-        <div className='nav-R'>
-          <ul>
-            <li>
-              <a >Sign out</a>
-            </li>
-          </ul>
-        </div>
-        
-      </nav>
-    </div>)
+      <ul>
+      <li>
+        <a  
+        onClick={()=> onRouteChange('login')} 
+        // className='link dim pointer ' 
+        href="#0"
+        >
+          Login</a>
+      </li>
+      <li>
+        <a  
+        onClick={()=> onRouteChange('register')} 
+        // className='link dim pointer ' 
+        href="#0"
+        >
+          Register</a>
+
+      </li>
+    </ul>
+          )
+  }
 }
 
 export default Navigation;

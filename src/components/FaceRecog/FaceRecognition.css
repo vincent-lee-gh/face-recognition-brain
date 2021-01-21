@@ -1,0 +1,27 @@
+.faceRecSect{
+  /* margin:0 auto; */
+  width: min(200px , 600px);
+  
+}
+
+.imgHolder img{
+  /* position:absolute; */
+  /* top:0; */
+  /* width: minmax(200px , 300px); */
+  
+  /* max-width: 800px; */
+  /* width: inherit; */
+  min-width: 200px;
+  
+}
+
+ 
+.bounding-box {
+  /* border: 2px solid rgb(34, 48, 236); */
+  position: absolute;
+  box-shadow: 0 0 0 3px #149df2 inset;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  cursor: pointer;
+}
