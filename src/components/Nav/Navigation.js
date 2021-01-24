@@ -19,7 +19,7 @@ const Navigation = ({onRouteChange, isLoginedIn}) => {
       <ul>
       <li>
         <a  
-        onClick={()=> onRouteChange('login')} 
+        onClick={()=> onRouteChange('signin')} 
         // className='link dim pointer ' 
         href="#0"
         >

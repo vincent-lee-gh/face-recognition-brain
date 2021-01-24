@@ -3,17 +3,17 @@ import Clarifai from 'clarifai';
 import CLARIFAI_API_KEY from './apiKey';
 import FaceRecognition from './components/FaceRecog/FaceRecognition'
 import Header from './components/Nav/Header'
-import Login from './components/LogStatus/Login'
+import Signin from './components/LogStatus/Signin'
 import Register from './components/LogStatus/Register'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import './App.css';
-import Navigation from './components/Nav/Navigation';
+// import Navigation from './components/Nav/Navigation';
 
-const contentWrapper = styled.div`
-`;
+// const contentWrapper = styled.div`
+// `;
 
 
 const app = new Clarifai.App({
@@ -27,10 +27,32 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
-      route: 'login',
-      isLoginIn: false
+      route: 'signin',
+      isLoginIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        // password: '',
+        entries: 0,
+        joined: ''
+      }
     }
   }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        // password: '',
+        entries: data.entries,
+        joined: data.joined
+      }
+    })
+  }
+
 
   calculateFaceLocation = (data) =>{
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -71,19 +93,33 @@ class App extends Component {
   // https://world-celebs.com/public/media/resize/800x-/2019/11/15/rachel-cook-2.jpg
   // https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_1000,h_743,c_limit/best-face-oil.png
 
-  onButtonSubmit = () => {
+  onPictureSubmit = () => {
     // console.log('click');
     this.setState({imageUrl: this.state.input});
-    app.models.predict(
+    app.models
+    .predict(
       Clarifai.FACE_DETECT_MODEL,
        this.state.input )
-       .then((response) => {
-        console.log(response);
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+    .then((response) => {
+      if (response){
+        fetch('http://localhost:5000/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id,
+          })
+        })
+        .then(response => response.json() )
+        .then(count => {
+          this.setState(Object.assign(this.state.user, {entries: count}))
+        })
+      }
+      console.log(response);
+      console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
 
-        this.displayFaceBox(this.calculateFaceLocation(response));
-      },
-    ).catch(err => console.log(err) );
+      this.displayFaceBox(this.calculateFaceLocation(response));
+    })
+    .catch(err => console.log(err) );
   }
 
   onRouteChange = (route) => {
@@ -96,7 +132,7 @@ class App extends Component {
   }
 
   render(){
-    const { isLoginIn, imageUrl, route, box } = this.state;
+    const { isLoginIn, imageUrl, route, box, user } = this.state;
     return (
       <div className="App">
         <div className='container'>
@@ -106,17 +142,17 @@ class App extends Component {
           ? <div className='contentWrapper' >
               <Logo />     
                 <div className='content'>
-                  <Rank />
+                  <Rank userName={user.name} userEntries={user.entries} />
                   <ImageLinkForm 
                     onInputChange={this.onInputChange} 
-                    onButtonSubmit={this.onButtonSubmit} />             
+                    onPictureSubmit={this.onPictureSubmit} />             
                     <FaceRecognition box={box}  imgUrl={imageUrl} />
                 </div> 
             </div>
           :(
-            route === 'login'
-            ?  <Login onRouteChange={this.onRouteChange} /> 
-            :  <Register onRouteChange={this.onRouteChange} /> 
+            route === 'signin'
+            ?  <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
+            :  <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
            )
           
          

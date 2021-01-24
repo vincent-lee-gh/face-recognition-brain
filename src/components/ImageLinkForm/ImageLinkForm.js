@@ -1,5 +1,5 @@
 
-const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
+const ImageLinkForm = ({onInputChange, onPictureSubmit}) => {
   return(
     <div className='imageLinkForm '>
       <p>
@@ -7,7 +7,7 @@ const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
       </p>
       <div id="inputSec" className=' glassMorphism ' >
         <input  type="tex" name="" id="imgSrc" onChange={onInputChange} />
-        <button id="btn-detect" onClick={onButtonSubmit} >Detect</button>
+        <button id="btn-detect" onClick={onPictureSubmit} >Detect</button>
       </div>
     </div>
     );
