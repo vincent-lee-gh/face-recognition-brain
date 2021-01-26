@@ -20,15 +20,12 @@ const app = new Clarifai.App({
   apiKey: CLARIFAI_API_KEY
 });
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      input: '',
+const initialState = {
+  input: '',
       imageUrl: '',
       box: {},
       route: 'signin',
-      isLoginIn: false,
+      isSignedIn: false,
       user: {
         id: '',
         name: '',
@@ -37,7 +34,12 @@ class App extends Component {
         entries: 0,
         joined: ''
       }
-    }
+}
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -102,7 +104,7 @@ class App extends Component {
        this.state.input )
     .then((response) => {
       if (response){
-        fetch('http://localhost:5000/image', {
+        fetch('http://localhost:4000/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -113,6 +115,7 @@ class App extends Component {
         .then(count => {
           this.setState(Object.assign(this.state.user, {entries: count}))
         })
+        .catch(console.log())
       }
       console.log(response);
       console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
@@ -123,20 +126,20 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
-    if (route === 'logout'){
-      this.setState({isLoginIn: false})
+    if (route === 'signout'){
+      this.setState(initialState)
     }else if (route === 'home') {
-      this.setState({isLoginIn: true})
+      this.setState({isSignedIn: true})
     }
     this.setState({route: route})
   }
 
   render(){
-    const { isLoginIn, imageUrl, route, box, user } = this.state;
+    const { isSignedIn, imageUrl, route, box, user } = this.state;
     return (
       <div className="App">
         <div className='container'>
-            <Header isLoginedIn={isLoginIn} onRouteChange={this.onRouteChange}  />
+            <Header isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}  />
             {/* <Navigation onRouteChange={this.onRouteChange}  /> */}
           {route === 'home' 
           ? <div className='contentWrapper' >
@@ -150,9 +153,9 @@ class App extends Component {
                 </div> 
             </div>
           :(
-            route === 'signin'
-            ?  <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
-            :  <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
+            route === 'register'
+            ?  <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
+            :  <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
            )
           
          

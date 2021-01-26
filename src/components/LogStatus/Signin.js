@@ -18,7 +18,7 @@ class Signin extends React.Component {
   }
 
   onSubmitSignIn = () => {
-    fetch('http://localhost:5000/signin', {
+    fetch('http://localhost:4000/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -28,12 +28,16 @@ class Signin extends React.Component {
     })
     .then(response => response.json())
     .then(user =>{
-
+      if(this.state.signInEmail !== '' && this.state.signInPassword !== ''){
         if(user.id){ // does the user exist? Did we receive a user with a property of id?
           this.props.loadUser(user);
           this.props.onRouteChange('home');
+        }else{
+          alert('🤖Wrong credentials, check your email or password🤖')
         }
-
+      }else{
+        alert('🤖Please type your email and password in the inputfield🤖')
+      }   
 
     })
     // console.log(this.state);

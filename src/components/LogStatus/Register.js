@@ -22,7 +22,7 @@ class Register extends React.Component {
   }
 
   onSubmitRegister = () => {
-    fetch('http://localhost:5000/register', {
+    fetch('http://localhost:4000/register', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -33,7 +33,7 @@ class Register extends React.Component {
     })
     .then(response => response.json())
     .then(user =>{
-      if(user ){
+      if(user.id){
         this.props.loadUser(user);
         this.props.onRouteChange('home');
 
@@ -42,7 +42,7 @@ class Register extends React.Component {
     // console.log(this.state);
   }
   render() {
-    const{ onRouteChange } = this.props;
+    // const{ onRouteChange } = this.props;
     return (
       <div>
         <article className="br5 ba  b--black-10 mv4 w-100 w-100-m w-50-l mw6 shadow-4 center">

@@ -1,12 +1,12 @@
+import React from 'react';
 
-
-const Navigation = ({onRouteChange, isLoginedIn}) => {
-    if (isLoginedIn) {
+const Navigation = ({onRouteChange, isSignedIn}) => {
+    if (isSignedIn) {
   return(
       <ul>
       <li>
         <a  
-        onClick={()=> onRouteChange('logout')} 
+        onClick={()=> onRouteChange('signout')} 
         // className='link dim pointer ' 
         href="#0"
         >

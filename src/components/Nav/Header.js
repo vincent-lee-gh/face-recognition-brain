@@ -1,6 +1,6 @@
 import Navigation from './Navigation'
 
-const Header = ({onRouteChange, isLoginedIn}) => {
+const Header = ({onRouteChange, isSignedIn}) => {
   return(
 
       
@@ -11,7 +11,7 @@ const Header = ({onRouteChange, isLoginedIn}) => {
         </div>
 
         <div className='nav-R'>
-          <Navigation isLoginedIn={isLoginedIn}  onRouteChange={onRouteChange}  />
+          <Navigation isSignedIn={isSignedIn}  onRouteChange={onRouteChange}  />
         </div>
         
       </nav>
