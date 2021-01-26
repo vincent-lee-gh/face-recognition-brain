@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Clarifai from 'clarifai';
-import CLARIFAI_API_KEY from './apiKey';
+// import Clarifai from 'clarifai';
+// import CLARIFAI_API_KEY from './apiKey';
 import FaceRecognition from './components/FaceRecog/FaceRecognition'
 import Header from './components/Nav/Header'
 import Signin from './components/LogStatus/Signin'
@@ -16,24 +16,20 @@ import './App.css';
 // `;
 
 
-const app = new Clarifai.App({
-  apiKey: CLARIFAI_API_KEY
-});
-
 const initialState = {
   input: '',
-      imageUrl: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        // password: '',
-        entries: 0,
-        joined: ''
-      }
+  imageUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    // password: '',
+    entries: 0,
+    joined: ''
+    }
 }
 
 class App extends Component {
@@ -98,11 +94,15 @@ class App extends Component {
   onPictureSubmit = () => {
     // console.log('click');
     this.setState({imageUrl: this.state.input});
-    app.models
-    .predict(
-      Clarifai.FACE_DETECT_MODEL,
-       this.state.input )
-    .then((response) => {
+      fetch('http://localhost:4000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+      .then(response => response.json())
+      .then((response) => {
       if (response){
         fetch('http://localhost:4000/image', {
           method: 'put',
